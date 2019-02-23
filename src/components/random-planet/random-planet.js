@@ -1,32 +1,95 @@
-import React from 'react';
+import React, { Component } from 'react';
 
 import './random-planet.css';
 
-const RandomPlanet = () => {
-    return(
-        <div className="random-planet jumbotron rounded">
+import SwapiService from '../../services/swapi-service';
+import Spinner from '../spinner';
+import ErrorIndicator from '../error-indicator';
+
+export default class RandomPlanet extends Component {
+
+    swapiService = new SwapiService();
+
+    state = {
+        planet: {},
+        loading: true,
+        error: false
+    };
+
+    componentDidMount() {
+        this.updatePlanet();
+        this.interval = setInterval(this.updatePlanet, 6000);
+    }
+
+    componentWillUnmount() {
+        clearInterval(this.interval);
+    }
+
+    onPlanetLoaded = (planet) => {
+        this.setState({
+            planet,
+            loading: false,
+        });
+    };
+
+    onError = (err) => {
+        this.setState({
+            error: true,
+            loading: false
+        });
+    };
+
+    updatePlanet = () => {
+        //Получаем случайный id
+        const id = Math.floor(Math.random()*25 + 2);
+        // const id = 9999999;
+        this.swapiService
+            .getPlanet(id)
+            .then(this.onPlanetLoaded)
+            .catch(this.onError)
+    };
+
+    render() {
+        const { planet, loading, error } = this.state;
+
+        const spinner = loading ? <Spinner /> : null;
+        const content = !loading && !error ? <PlanetView planet={planet}/> : null;
+        const errorMessage = error ? <ErrorIndicator /> : null;
+
+        return (
+            <div className="random-planet jumbotron rounded">
+                {errorMessage}
+                {spinner}
+                {content}
+            </div>
+        );
+    };
+};
+
+const PlanetView = ({ planet }) => {
+    const {id, name, population, rotationPeriod, diameter} = planet;
+    return (
+        <React.Fragment>
             <img className="planet-image"
-                 src="http://lurkmore.so/images/5/54/Peka_namekaet.jpg" />
+                 src={`https://starwars-visualguide.com/assets/img/planets/${id}.jpg`}/>
             <div>
-                <h4>Planet Name</h4>
+                <h4>{name}</h4>
                 <ul className="list-group list-group-flush">
                     <li className="list-group-item">
                         <span className="term">Population</span>
-                        <span>12345</span>
+                        <span>{population}</span>
                     </li>
                     <li className="list-group-item">
                         <span className="term">Rotation period</span>
-                        <span>43</span>
+                        <span>{rotationPeriod}</span>
                     </li>
                     <li className="list-group-item">
                         <span className="term">Diameter</span>
-                        <span>106</span>
+                        <span>{diameter}</span>
                     </li>
                 </ul>
             </div>
-
-        </div>
-    )
+        </React.Fragment>
+    );
 };
 
-export default RandomPlanet;

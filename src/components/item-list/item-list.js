@@ -2,33 +2,28 @@ import React from 'react';
 
 import './item-list.css';
 
-/*
-import React, { Component } from 'react';
-export default class App extends Component {
+const ItemList = (props) => {
+    const { renderItem, children, data } = props;
 
-    render() {
-        return(
-            <div>
-                <h1>STAR DB</h1>
-            </div>
+    const items = data.map((item) => {
+        const { id } = item;
+        //Принимаем рендер для компонента из чайлдов или пропсов
+        const label = children ? children(item) : renderItem(item);
+
+        return (
+            <li className="list-group-item"
+                key={id}
+                onClick={() => props.onItemSelected(id)}>
+                {label}
+            </li>
         )
-    }
-}*/
+    });
 
-const ItemList = () => {
-    return(
+    return (
         <ul className="item-list list-group">
-            <li className="list-group-item">
-                Luke Skywalker
-            </li>
-            <li className="list-group-item">
-                Darth Vader
-            </li>
-            <li className="list-group-item">
-                R2-D2
-            </li>
+            { items }
         </ul>
-    )
+    );
 };
 
 export default ItemList;

@@ -11,7 +11,17 @@
 }
 
 .random-planet .list-group {
-    margin: 1rem 0 0 1rem;
+     margin: 1rem 0 0 1rem;
+}
+
+.random-planet h4 {
+    /*margin-left: 1rem;*/
+    padding-left: 1rem;
+    /*margin: 1rem;*/
+}
+
+.random-planet .spinner {
+    display: flex;
 }
 
 .random-planet .list-group-item {
