@@ -19,18 +19,21 @@ const withData = (View) => {
             this.props.getData()
                 .then((data) => {
                     this.setState({
-                        data
+                        data,
+                        loading: false
                     })
                 })
                 .catch((err) => {
                     console.error(err);
                     this.setState({
-                        error: true
+                        error: true,
+                        loading: false
                     })
                 })
         };
 
         componentDidMount() {
+            console.log(`componentDidMount()`);
             this.update();
         };
 

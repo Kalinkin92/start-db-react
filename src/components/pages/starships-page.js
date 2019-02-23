@@ -35,4 +35,23 @@ export default class StarshipsPage extends Component {
     };
 }
 
+/*const StarshipsPage = () => {
 
+    return(
+        <div className="row mb2">
+            <div className="col-md-6">
+                <StarshipList
+                    onItemSelected={(itemId) => {
+                        const newPath = `/starships/${itemId}`;
+                    }}
+                />
+            </div>
+            <div className="col-md-6">
+                {/!*{ selectedPerson ? personDetails : null}*!/}
+                {/!*<StarshipDetails itemId={selectedPerson}  />*!/}
+            </div>
+        </div>
+    );
+};*/
+
+// export default StarshipsPage;
