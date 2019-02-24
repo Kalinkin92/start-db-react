@@ -4,54 +4,24 @@ import React, { Component } from 'react';
 
 import { StarshipDetails, StarshipList } from '../sw-components';
 
-export default class StarshipsPage extends Component {
+const StarshipsPage = ({ history, match }) => {
 
-    state = {
-        selectedPerson: null,
-    };
-
-    onItemSelected = (id) => {
-        this.setState({
-            selectedPerson: id
-        })
-    };
-
-    render() {
-        const { selectedPerson } = this.state;
-
-        return(
-            <div className="row mb2">
-                <div className="col-md-6">
-                    <StarshipList
-                        onItemSelected={this.onItemSelected}
-                    />
-                </div>
-                <div className="col-md-6">
-                    {/*{ selectedPerson ? personDetails : null}*/}
-                    <StarshipDetails itemId={selectedPerson}  />
-                </div>
-            </div>
-        );
-    };
-}
-
-/*const StarshipsPage = () => {
+    const { id } = match.params;
 
     return(
         <div className="row mb2">
             <div className="col-md-6">
                 <StarshipList
-                    onItemSelected={(itemId) => {
-                        const newPath = `/starships/${itemId}`;
-                    }}
+                    onItemSelected={(id) => history.push(id)}
                 />
             </div>
             <div className="col-md-6">
-                {/!*{ selectedPerson ? personDetails : null}*!/}
-                {/!*<StarshipDetails itemId={selectedPerson}  />*!/}
+                {/*{ selectedPerson ? personDetails : null}*/}
+                <StarshipDetails itemId={id}  />
             </div>
         </div>
     );
-};*/
+};
 
-// export default StarshipsPage;
+export default StarshipsPage;
+

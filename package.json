@@ -1,8 +1,9 @@
 {
-  "name": "star-db",
+  "name": "start-db-react",
   "version": "0.1.0",
   "private": true,
   "proxy": "https://swapi.co",
+  "homepages": "http://kalinkin92.github.com/start-db-react",
   "dependencies": {
     "prop-types": "^15.7.2",
     "react": "^16.8.2",
@@ -14,7 +15,12 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
+    "predeployLive": "npm run build",
+    "deployLive": "npm run cleanup && gh-pages -d build -b deploy -e build",
+    "cleanup": "rm -rf node_modules/gh-pages/.cache"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -24,5 +30,8 @@
     "not dead",
     "not ie <= 11",
     "not op_mini all"
-  ]
+  ],
+  "devDependencies": {
+    "gh-pages": "^2.0.1"
+  }
 }

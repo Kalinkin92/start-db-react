@@ -11,7 +11,9 @@ import RandomPlanet from '../random-planet';
 import {
     PeoplePage,
     PlanetsPage,
-    StarshipsPage
+    StarshipsPage,
+    SecretPage,
+    LoginPage,
 } from '../pages';
 
 
@@ -28,7 +30,18 @@ export default class App extends Component {
 
     swapiService = new SwapiService();
 
+    state = {
+        isLoggedIn: false
+    };
+
+    onLogin = () => {
+        this.setState({isLoggedIn: true})
+    };
+
     render() {
+
+        const { isLoggedIn } = this.state;
+
         return(
             <ErrorBoundry>
                 <SwapiServiceProvider value={this.swapiService}>
@@ -38,11 +51,24 @@ export default class App extends Component {
                             <RandomPlanet updateInterval={4000}/>
 
                             <Route path="/" render={() => <h2>Welcome to StarDb</h2>} exact/>
-                            <Route path="/people" component={PeoplePage} />
-                            <Route path="/planets" component={PlanetsPage} />
-                            <Route path="/starships" component={StarshipsPage}
-                                   // render={() => <StarshipList />}
+                            <Route path="/login"
+                                   render={() => (
+                                       <LoginPage
+                                           onLogin={this.onLogin}
+                                           isLoggedIn={isLoggedIn}
+                                       />
+                                   )}
                             />
+                            <Route path="/secret"
+                                   render={() => (
+                                       <SecretPage
+                                           isLoggedIn={isLoggedIn}
+                                       />
+                                   )}
+                            />
+                            <Route path="/people/:id?" component={PeoplePage} />
+                            <Route path="/planets/:id?" component={PlanetsPage} />
+                            <Route path="/starships/:id?" component={StarshipsPage}/>
                             {/*<Route path="/starships/:id"
                                    render={({match, location, history}) => {
                                        const { id } = match.params;
