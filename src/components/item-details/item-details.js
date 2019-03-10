@@ -4,7 +4,10 @@ import './item-details.css';
 
 import Spinner from '../spinner';
 
-export default class PersonDetails extends Component {
+import { doHelloMsg } from '../../actions';
+import { connect } from 'react-redux';
+
+class PersonDetails extends Component {
 
     state = {
         item: null,
@@ -12,7 +15,9 @@ export default class PersonDetails extends Component {
     };
 
     componentDidMount() {
+        // console.log(this.props.msg);
         this.updatePerson();
+        this.props.doHelloMsg('COCKSUCKER');
     }
 
     updatePerson() {
@@ -60,6 +65,7 @@ export default class PersonDetails extends Component {
 
         return(
             <div className="item-details card">
+                <h2>{this.props.msg}</h2>
                 {spinner}
                 {content}
             </div>
@@ -104,3 +110,15 @@ export {
     Record
 };
 
+const mapStateToProps = (state) => {
+    return {
+        msg: state.msg
+    }
+};
+const mapDispatchToProps = (dispatch) => {
+    return {
+        doHelloMsg: (msg) => dispatch(doHelloMsg(msg))
+    }
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(PersonDetails);
