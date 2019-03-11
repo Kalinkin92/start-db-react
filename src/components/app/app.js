@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
 
 import './app.css';
 
@@ -50,31 +50,28 @@ export default class App extends Component {
                             <Header />
                             <RandomPlanet updateInterval={4000}/>
 
-                            <Route path="/" render={() => <h2>Welcome to StarDb</h2>} exact/>
-                            <Route path="/login"
-                                   render={() => (
-                                       <LoginPage
-                                           onLogin={this.onLogin}
-                                           isLoggedIn={isLoggedIn}
-                                       />
-                                   )}
-                            />
-                            <Route path="/secret"
-                                   render={() => (
-                                       <SecretPage
-                                           isLoggedIn={isLoggedIn}
-                                       />
-                                   )}
-                            />
-                            <Route path="/people/:id?" component={PeoplePage} />
-                            <Route path="/planets/:id?" component={PlanetsPage} />
-                            <Route path="/starships/:id?" component={StarshipsPage}/>
-                            {/*<Route path="/starships/:id"
-                                   render={({match, location, history}) => {
-                                       const { id } = match.params;
-                                       return <StarshipDetails itemId={id}/>
-                                   }}
-                            />*/}
+                            <Switch >
+                                <Route path="/" render={() => <h2>Welcome to StarDb</h2>} exact/>
+                                <Route path="/login"
+                                       render={() => (
+                                           <LoginPage
+                                               onLogin={this.onLogin}
+                                               isLoggedIn={isLoggedIn}
+                                           />
+                                       )}
+                                />
+                                <Route path="/secret"
+                                       render={() => (
+                                           <SecretPage
+                                               isLoggedIn={isLoggedIn}
+                                           />
+                                       )}
+                                />
+                                <Route path="/people/:id?" component={PeoplePage} />
+                                <Route path="/planets/:id?" component={PlanetsPage} />
+                                <Route path="/starships/:id?" component={StarshipsPage}/>
+                                <Route render={() => <h3>Страница не найдена</h3>} />
+                            </Switch>
 
                         </div>
                     </Router>
